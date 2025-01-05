@@ -26,4 +26,36 @@ typedef g_2_linkedlist_s_node_t g_linkedlist_s_node_t;
 #define g_linkedlist_s_deinit g_2_linkedlist_s_deinit
 #define g_linkedlist_s_dispose g_2_linkedlist_s_dispose
 
+typedef g_2_linkedlist_d_t g_linkedlist_d_t;
+typedef g_2_linkedlist_d_node_t g_linkedlist_d_node_t;
+
+#define g_linkedlist_d_new g_2_linkedlist_d_new
+#define g_linkedlist_d_init g_2_linkedlist_d_init
+#define g_linkedlist_d_push g_2_linkedlist_d_push
+#define g_linkedlist_d_pop g_2_linkedlist_d_pop
+#define g_linkedlist_d_unshift g_2_linkedlist_d_unshift
+#define g_linkedlist_d_dhift g_2_linkedlist_d_dhift
+#define g_linkedlist_d_push_node g_2_linkedlist_d_push_node
+#define g_linkedlist_d_pop_node g_2_linkedlist_d_pop_node
+#define g_linkedlist_d_unshift_node g_2_linkedlist_d_unshift_node
+#define g_linkedlist_d_dhift_node g_2_linkedlist_d_dhift_node
+#define g_linkedlist_d_node_new g_2_linkedlist_d_node_new
+#define g_linkedlist_d_node_get_addr g_2_linkedlist_d_node_get_addr
+#define g_linkedlist_d_node_dispose g_2_linkedlist_d_node_dispose
+#define g_linkedlist_d_insert_before g_2_linkedlist_d_insert_before
+#define g_linkedlist_d_insert_after g_2_linkedlist_d_insert_after
+#define g_linkedlist_d_insert_node_before g_2_linkedlist_d_insert_node_before
+#define g_linkedlist_d_insert_node_after g_2_linkedlist_d_insert_node_after
+#define g_linkedlist_d_remove_before g_2_linkedlist_d_remove_before
+#define g_linkedlist_d_remove_after g_2_linkedlist_d_remove_after
+#define g_linkedlist_d_remove_node_before g_2_linkedlist_d_remove_node_before
+#define g_linkedlist_d_remove_node_after g_2_linkedlist_d_remove_node_after
+#define g_linkedlist_d_move_all_before g_2_linkedlist_d_move_all_before
+#define g_linkedlist_d_move_all_after g_2_linkedlist_d_move_all_after
+#define g_linkedlist_d_move_all_before_node                                    \
+  g_2_linkedlist_d_move_beforefter_node
+#define g_linkedlist_d_move_all_after_node g_2_linkedlist_d_move_all_after_node
+#define g_linkedlist_d_deinit g_2_linkedlist_d_deinit
+#define g_linkedlist_d_dispose g_2_linkedlist_d_dispose
+
 #endif
