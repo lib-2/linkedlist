@@ -58,4 +58,16 @@ typedef g_2_linkedlist_d_node_t g_linkedlist_d_node_t;
 #define g_linkedlist_d_deinit g_2_linkedlist_d_deinit
 #define g_linkedlist_d_dispose g_2_linkedlist_d_dispose
 
+typedef g_2_linkedlist_x_t g_linkedlist_x_t;
+typedef g_2_linkedlist_x_node_t g_linkedlist_x_node_t;
+
+#define g_linkedlist_x_new g_2_linkedlist_x_new
+#define g_linkedlist_x_init g_2_linkedlist_x_init
+#define g_linkedlist_x_push g_2_linkedlist_x_push
+#define g_linkedlist_x_pop g_2_linkedlist_x_pop
+#define g_linkedlist_x_unshift g_2_linkedlist_x_unshift
+#define g_linkedlist_x_shift g_2_linkedlist_x_shift
+#define g_linkedlist_x_deinit g_2_linkedlist_x_deinit
+#define g_linkedlist_x_dispose g_2_linkedlist_x_dispose
+
 #endif

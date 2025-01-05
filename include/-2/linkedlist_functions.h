@@ -232,6 +232,32 @@ void g_2_linkedlist_d_deinit(g_2_linkedlist_d_t *self);
 
 void g_2_linkedlist_d_dispose(g_2_linkedlist_d_t *self);
 
+g_2_linkedlist_x_t *g_2_linkedlist_x_new(size_t element_size,
+                                         g_0_allocator_t *allocator);
+
+void g_2_linkedlist_x_init(size_t element_size, g_0_allocator_t *allocator,
+                           g_2_linkedlist_x_t *out);
+
+/**
+ * @param out optional pointer to retrieve node in list
+ */
+g_err_t g_2_linkedlist_x_push(g_2_linkedlist_x_t *self, const void *data,
+                              g_2_linkedlist_x_node_t **out);
+
+void g_2_linkedlist_x_pop(g_2_linkedlist_x_t *self, void *out);
+
+/**
+ * @param out optional pointer to retrieve node in list
+ */
+g_err_t g_2_linkedlist_x_unshift(g_2_linkedlist_x_t *self, const void *data,
+                                 g_2_linkedlist_x_node_t **out);
+
+void g_2_linkedlist_x_shift(g_2_linkedlist_x_t *self, void *out);
+
+void g_2_linkedlist_x_deinit(g_2_linkedlist_x_t *self);
+
+void g_2_linkedlist_x_dispose(g_2_linkedlist_x_t *self);
+
 #ifdef __cplusplus
 }
 #endif
