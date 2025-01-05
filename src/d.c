@@ -4,68 +4,68 @@
 
 #include "-0_allocator.h"
 
-g_2_linkedlist_d_t *g_2_linkedlist_d_new(size_t element_size,
-                                         g_0_allocator_t *allocator) {
-  g_2_linkedlist_d_t *const result =
-      (g_2_linkedlist_d_t *)g_alloc(allocator, sizeof(g_2_linkedlist_d_t));
-  g_2_linkedlist_d_init(element_size, allocator, result);
+g_linkedlist_d_t *g_linkedlist_d_new(size_t element_size,
+                                     g_allocator_t *allocator) {
+  g_linkedlist_d_t *const result =
+      (g_linkedlist_d_t *)g_alloc(allocator, sizeof(g_linkedlist_d_t));
+  g_linkedlist_d_init(element_size, allocator, result);
   return result;
 }
 
-void g_2_linkedlist_d_init(size_t element_size, g_0_allocator_t *allocator,
-                           g_2_linkedlist_d_t *out) {
+void g_linkedlist_d_init(size_t element_size, g_allocator_t *allocator,
+                         g_linkedlist_d_t *out) {
   out->allocator = allocator;
   out->element_size = element_size;
   out->length = 0;
   out->head = out->tail = NULL;
 }
 
-g_err_t g_2_linkedlist_d_push(g_2_linkedlist_d_t *self, const void *data,
-                              g_2_linkedlist_d_node_t **out) {
-  g_2_linkedlist_d_node_t *const node =
-      g_2_linkedlist_d_node_new(self->element_size, self->allocator, data);
+g_err_t g_linkedlist_d_push(g_linkedlist_d_t *self, const void *data,
+                            g_linkedlist_d_node_t **out) {
+  g_linkedlist_d_node_t *const node =
+      g_linkedlist_d_node_new(self->element_size, self->allocator, data);
   if (!node) {
     return true;
   }
-  g_2_linkedlist_d_push_node(self, node);
+  g_linkedlist_d_push_node(self, node);
   if (out) {
     *out = node;
   }
   return false;
 }
 
-void g_2_linkedlist_d_pop(g_2_linkedlist_d_t *self, void *out) {
-  g_2_linkedlist_d_node_t *const node = g_2_linkedlist_d_pop_node(self);
+void g_linkedlist_d_pop(g_linkedlist_d_t *self, void *out) {
+  g_linkedlist_d_node_t *const node = g_linkedlist_d_pop_node(self);
   if (out) {
     memcpy(out, node->opaque, self->element_size);
   }
   g_dealloc(self->allocator, node);
 }
 
-g_err_t g_2_linkedlist_d_unshift(g_2_linkedlist_d_t *self, const void *data,
-                                 g_2_linkedlist_d_node_t **out) {
-  g_2_linkedlist_d_node_t *const node =
-      g_2_linkedlist_d_node_new(self->element_size, self->allocator, data);
+g_err_t g_linkedlist_d_unshift(g_linkedlist_d_t *self, const void *data,
+                               g_linkedlist_d_node_t **out) {
+  g_linkedlist_d_node_t *const node =
+      g_linkedlist_d_node_new(self->element_size, self->allocator, data);
   if (!node) {
     return true;
   }
-  g_2_linkedlist_d_unshift_node(self, node);
+  g_linkedlist_d_unshift_node(self, node);
   if (out) {
     *out = node;
   }
   return false;
 }
 
-void g_2_linkedlist_d_shift(g_2_linkedlist_d_t *self, void *out) {
-  g_2_linkedlist_d_node_t *const node = g_2_linkedlist_d_shift_node(self);
+void g_linkedlist_d_shift(g_linkedlist_d_t *self, void *out) {
+  g_linkedlist_d_node_t *const node = g_linkedlist_d_shift_node(self);
   if (out) {
     memcpy(out, node->opaque, self->element_size);
   }
   g_dealloc(self->allocator, node);
 }
 
-void g_2_linkedlist_d_push_node(g_2_linkedlist_d_t *self,
-                                g_2_linkedlist_d_node_t *node) {
+void g_linkedlist_d_push_node(g_linkedlist_d_t *self,
+                              g_linkedlist_d_node_t *node) {
   node->prev = self->tail;
   if (self->tail) {
     self->tail->next = node;
@@ -77,8 +77,8 @@ void g_2_linkedlist_d_push_node(g_2_linkedlist_d_t *self,
   self->length++;
 }
 
-g_2_linkedlist_d_node_t *g_2_linkedlist_d_pop_node(g_2_linkedlist_d_t *self) {
-  g_2_linkedlist_d_node_t *const node = self->tail;
+g_linkedlist_d_node_t *g_linkedlist_d_pop_node(g_linkedlist_d_t *self) {
+  g_linkedlist_d_node_t *const node = self->tail;
   if (node->prev) {
     node->prev->next = NULL;
   } else {
@@ -89,8 +89,8 @@ g_2_linkedlist_d_node_t *g_2_linkedlist_d_pop_node(g_2_linkedlist_d_t *self) {
   return node;
 }
 
-void g_2_linkedlist_d_unshift_node(g_2_linkedlist_d_t *self,
-                                   g_2_linkedlist_d_node_t *node) {
+void g_linkedlist_d_unshift_node(g_linkedlist_d_t *self,
+                                 g_linkedlist_d_node_t *node) {
   node->next = self->head;
   if (self->head) {
     self->head->prev = node;
@@ -102,8 +102,8 @@ void g_2_linkedlist_d_unshift_node(g_2_linkedlist_d_t *self,
   self->length++;
 }
 
-g_2_linkedlist_d_node_t *g_2_linkedlist_d_shift_node(g_2_linkedlist_d_t *self) {
-  g_2_linkedlist_d_node_t *const node = self->head;
+g_linkedlist_d_node_t *g_linkedlist_d_shift_node(g_linkedlist_d_t *self) {
+  g_linkedlist_d_node_t *const node = self->head;
   if (node->next) {
     node->next->prev = NULL;
   } else {
@@ -114,11 +114,11 @@ g_2_linkedlist_d_node_t *g_2_linkedlist_d_shift_node(g_2_linkedlist_d_t *self) {
   return node;
 }
 
-g_2_linkedlist_d_node_t *g_2_linkedlist_d_node_new(size_t element_size,
-                                                   g_0_allocator_t *allocator,
-                                                   const void *data) {
-  g_2_linkedlist_d_node_t *const node = (g_2_linkedlist_d_node_t *)g_alloc(
-      allocator, sizeof(g_2_linkedlist_d_node_t) + element_size);
+g_linkedlist_d_node_t *g_linkedlist_d_node_new(size_t element_size,
+                                               g_allocator_t *allocator,
+                                               const void *data) {
+  g_linkedlist_d_node_t *const node = (g_linkedlist_d_node_t *)g_alloc(
+      allocator, sizeof(g_linkedlist_d_node_t) + element_size);
   if (!node) {
     return NULL;
   }
@@ -129,30 +129,30 @@ g_2_linkedlist_d_node_t *g_2_linkedlist_d_node_new(size_t element_size,
   return node;
 }
 
-void *g_2_linkedlist_d_node_get_addr(g_2_linkedlist_d_node_t *node) {
+void *g_linkedlist_d_node_get_addr(g_linkedlist_d_node_t *node) {
   return (void *)node->opaque;
 }
 
-void g_2_linkedlist_d_node_dispose(g_2_linkedlist_d_node_t *node,
-                                   g_0_allocator_t *allocator) {
+void g_linkedlist_d_node_dispose(g_linkedlist_d_node_t *node,
+                                 g_allocator_t *allocator) {
   g_dealloc(allocator, node);
 }
 
-g_err_t g_2_linkedlist_d_insert_before(g_2_linkedlist_d_t *self,
-                                       g_2_linkedlist_d_node_t *node,
-                                       const void *data) {
-  g_2_linkedlist_d_node_t *const new_node =
-      g_2_linkedlist_d_node_new(self->element_size, self->allocator, data);
+g_err_t g_linkedlist_d_insert_before(g_linkedlist_d_t *self,
+                                     g_linkedlist_d_node_t *node,
+                                     const void *data) {
+  g_linkedlist_d_node_t *const new_node =
+      g_linkedlist_d_node_new(self->element_size, self->allocator, data);
   if (!new_node) {
     return true;
   }
-  g_2_linkedlist_d_insert_node_before(self, node, new_node);
+  g_linkedlist_d_insert_node_before(self, node, new_node);
   return false;
 }
 
-void g_2_linkedlist_d_insert_node_before(g_2_linkedlist_d_t *self,
-                                         g_2_linkedlist_d_node_t *node,
-                                         g_2_linkedlist_d_node_t *to_insert) {
+void g_linkedlist_d_insert_node_before(g_linkedlist_d_t *self,
+                                       g_linkedlist_d_node_t *node,
+                                       g_linkedlist_d_node_t *to_insert) {
   to_insert->next = node;
   to_insert->prev = node->prev;
   if (node->prev) {
@@ -164,21 +164,21 @@ void g_2_linkedlist_d_insert_node_before(g_2_linkedlist_d_t *self,
   self->length++;
 }
 
-g_err_t g_2_linkedlist_d_insert_after(g_2_linkedlist_d_t *self,
-                                      g_2_linkedlist_d_node_t *node,
-                                      const void *data) {
-  g_2_linkedlist_d_node_t *const new_node =
-      g_2_linkedlist_d_node_new(self->element_size, self->allocator, data);
+g_err_t g_linkedlist_d_insert_after(g_linkedlist_d_t *self,
+                                    g_linkedlist_d_node_t *node,
+                                    const void *data) {
+  g_linkedlist_d_node_t *const new_node =
+      g_linkedlist_d_node_new(self->element_size, self->allocator, data);
   if (!new_node) {
     return true;
   }
-  g_2_linkedlist_d_insert_node_after(self, node, new_node);
+  g_linkedlist_d_insert_node_after(self, node, new_node);
   return false;
 }
 
-void g_2_linkedlist_d_insert_node_after(g_2_linkedlist_d_t *self,
-                                        g_2_linkedlist_d_node_t *node,
-                                        g_2_linkedlist_d_node_t *to_insert) {
+void g_linkedlist_d_insert_node_after(g_linkedlist_d_t *self,
+                                      g_linkedlist_d_node_t *node,
+                                      g_linkedlist_d_node_t *to_insert) {
   to_insert->prev = node;
   to_insert->next = node->next;
   if (node->next) {
@@ -190,24 +190,24 @@ void g_2_linkedlist_d_insert_node_after(g_2_linkedlist_d_t *self,
   self->length++;
 }
 
-void g_2_linkedlist_d_remove_before(g_2_linkedlist_d_t *self,
-                                    g_2_linkedlist_d_node_t *node) {
-  g_2_linkedlist_d_node_t *const to_remove =
-      g_2_linkedlist_d_remove_node_before(self, node);
-  g_2_linkedlist_d_node_dispose(to_remove, self->allocator);
+void g_linkedlist_d_remove_before(g_linkedlist_d_t *self,
+                                  g_linkedlist_d_node_t *node) {
+  g_linkedlist_d_node_t *const to_remove =
+      g_linkedlist_d_remove_node_before(self, node);
+  g_linkedlist_d_node_dispose(to_remove, self->allocator);
 }
 
-void g_2_linkedlist_d_remove_after(g_2_linkedlist_d_t *self,
-                                   g_2_linkedlist_d_node_t *node) {
-  g_2_linkedlist_d_node_t *const to_remove =
-      g_2_linkedlist_d_remove_node_after(self, node);
-  g_2_linkedlist_d_node_dispose(to_remove, self->allocator);
+void g_linkedlist_d_remove_after(g_linkedlist_d_t *self,
+                                 g_linkedlist_d_node_t *node) {
+  g_linkedlist_d_node_t *const to_remove =
+      g_linkedlist_d_remove_node_after(self, node);
+  g_linkedlist_d_node_dispose(to_remove, self->allocator);
 }
 
-g_2_linkedlist_d_node_t *
-g_2_linkedlist_d_remove_node_before(g_2_linkedlist_d_t *self,
-                                    g_2_linkedlist_d_node_t *node) {
-  g_2_linkedlist_d_node_t *const to_remove = node->prev;
+g_linkedlist_d_node_t *
+g_linkedlist_d_remove_node_before(g_linkedlist_d_t *self,
+                                  g_linkedlist_d_node_t *node) {
+  g_linkedlist_d_node_t *const to_remove = node->prev;
   if (to_remove->prev) {
     to_remove->prev->next = node;
   } else {
@@ -218,10 +218,10 @@ g_2_linkedlist_d_remove_node_before(g_2_linkedlist_d_t *self,
   return to_remove;
 }
 
-g_2_linkedlist_d_node_t *
-g_2_linkedlist_d_remove_node_after(g_2_linkedlist_d_t *self,
-                                   g_2_linkedlist_d_node_t *node) {
-  g_2_linkedlist_d_node_t *const to_remove = node->next;
+g_linkedlist_d_node_t *
+g_linkedlist_d_remove_node_after(g_linkedlist_d_t *self,
+                                 g_linkedlist_d_node_t *node) {
+  g_linkedlist_d_node_t *const to_remove = node->next;
   if (to_remove->next) {
     to_remove->next->prev = node;
   } else {
@@ -232,8 +232,8 @@ g_2_linkedlist_d_remove_node_after(g_2_linkedlist_d_t *self,
   return to_remove;
 }
 
-void g_2_linkedlist_d_move_all_before(g_2_linkedlist_d_t *to,
-                                      g_2_linkedlist_d_t *from) {
+void g_linkedlist_d_move_all_before(g_linkedlist_d_t *to,
+                                    g_linkedlist_d_t *from) {
   if (to->head) {
     from->tail->next = to->head;
     to->head->prev = from->tail;
@@ -246,9 +246,9 @@ void g_2_linkedlist_d_move_all_before(g_2_linkedlist_d_t *to,
   from->length = 0;
 }
 
-void g_2_linkedlist_d_move_all_before_node(g_2_linkedlist_d_t *to,
-                                           g_2_linkedlist_d_node_t *node,
-                                           g_2_linkedlist_d_t *from) {
+void g_linkedlist_d_move_all_before_node(g_linkedlist_d_t *to,
+                                         g_linkedlist_d_node_t *node,
+                                         g_linkedlist_d_t *from) {
   if (node->prev) {
     from->tail->next = node;
     node->prev->next = from->head;
@@ -262,8 +262,8 @@ void g_2_linkedlist_d_move_all_before_node(g_2_linkedlist_d_t *to,
   from->length = 0;
 }
 
-void g_2_linkedlist_d_move_all_after(g_2_linkedlist_d_t *to,
-                                     g_2_linkedlist_d_t *from) {
+void g_linkedlist_d_move_all_after(g_linkedlist_d_t *to,
+                                   g_linkedlist_d_t *from) {
   if (to->tail) {
     to->tail->next = from->head;
     from->head->prev = to->tail;
@@ -276,9 +276,9 @@ void g_2_linkedlist_d_move_all_after(g_2_linkedlist_d_t *to,
   from->length = 0;
 }
 
-void g_2_linkedlist_d_move_all_after_node(g_2_linkedlist_d_t *to,
-                                          g_2_linkedlist_d_node_t *node,
-                                          g_2_linkedlist_d_t *from) {
+void g_linkedlist_d_move_all_after_node(g_linkedlist_d_t *to,
+                                        g_linkedlist_d_node_t *node,
+                                        g_linkedlist_d_t *from) {
   if (node->next) {
     from->head->prev = node;
     from->tail->next = node->next;
@@ -292,13 +292,13 @@ void g_2_linkedlist_d_move_all_after_node(g_2_linkedlist_d_t *to,
   from->length = 0;
 }
 
-void g_2_linkedlist_d_deinit(g_2_linkedlist_d_t *self) {
+void g_linkedlist_d_deinit(g_linkedlist_d_t *self) {
   while (self->head) {
-    g_2_linkedlist_d_shift(self, NULL);
+    g_linkedlist_d_shift(self, NULL);
   }
 }
 
-void g_2_linkedlist_d_dispose(g_2_linkedlist_d_t *self) {
-  g_2_linkedlist_d_deinit(self);
+void g_linkedlist_d_dispose(g_linkedlist_d_t *self) {
+  g_linkedlist_d_deinit(self);
   g_dealloc(self->allocator, self);
 }

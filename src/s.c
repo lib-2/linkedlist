@@ -5,14 +5,14 @@
 #include "-0_allocator.h"
 
 g_linkedlist_s_t *g_linkedlist_s_new(size_t element_size,
-                                     g_0_allocator_t *allocator) {
+                                     g_allocator_t *allocator) {
   g_linkedlist_s_t *const result =
       (g_linkedlist_s_t *)g_alloc(allocator, sizeof(g_linkedlist_s_t));
   g_linkedlist_s_init(element_size, allocator, result);
   return result;
 }
 
-void g_linkedlist_s_init(size_t element_size, g_0_allocator_t *allocator,
+void g_linkedlist_s_init(size_t element_size, g_allocator_t *allocator,
                          g_linkedlist_s_t *out) {
   out->allocator = allocator;
   out->element_size = element_size;
@@ -89,7 +89,7 @@ g_linkedlist_s_node_t *g_linkedlist_s_shift_node(g_linkedlist_s_t *self) {
 }
 
 g_linkedlist_s_node_t *g_linkedlist_s_node_new(size_t element_size,
-                                               g_0_allocator_t *allocator,
+                                               g_allocator_t *allocator,
                                                const void *data) {
   g_linkedlist_s_node_t *const node = (g_linkedlist_s_node_t *)g_alloc(
       allocator, sizeof(g_linkedlist_s_node_t) + element_size);
@@ -108,7 +108,7 @@ void *g_linkedlist_s_node_get_addr(g_linkedlist_s_node_t *node) {
 }
 
 void g_linkedlist_s_node_dispose(g_linkedlist_s_node_t *node,
-                                 g_0_allocator_t *allocator) {
+                                 g_allocator_t *allocator) {
   g_dealloc(allocator, node);
 }
 
